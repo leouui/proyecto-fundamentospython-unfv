@@ -8,9 +8,9 @@ def App(data):
                     "Calculadora Académica Avanzada",
                     "Salir")
 
-        option = input("Escoja una opcion: ")
+        option = int(input("Escoja una opcion: "))
         clearConsole()
-
+        
         match option:
             case 1:
                 print("Gestor de Tareas y Recordatorios")
