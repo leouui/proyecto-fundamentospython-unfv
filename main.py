@@ -12,15 +12,11 @@ while True:
     match option:
         case 1:
             user = Login()
-            if(not(user is None)): 
-                App(user)
+            if(not(user is None)): App(user)
         case 2:
             user = RegisterUser()
-            if(not(user is None)): 
-                addUser(user)
+            if(not(user is None)): addUser(user)
         case 3:
             break
         case __:
-            print("antony")
             print("Ingrese una opcion correcta")
-            print("majo no chambea......")

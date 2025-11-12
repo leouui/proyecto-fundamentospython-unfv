@@ -1,33 +1,24 @@
-from database.users import users
-from helpers import SearchUserByName, optionsShow
+from helpers import optionsShow, continueUntilCorrect
+from pages.validations.Register import userCodeValidation,userNameValidation,passwordValidation
 
 def RegisterUser():
     print("---------Registro---------")
     
-    while True:
-        userName = input("Ingrese el nombre del usuario: ")
-        result = SearchUserByName(userName,users)
-    
-        if(result[0]):
-            optionsShow("---El usuario ya existe","Volver al Inicio","Ingresar el nombre de usuario nuevamente:")
-            
-            match int(input("Escoja una opcion: ")):
-                case 1: return
-                case 2: continue
-        
-        password = input("Ingrese la contrasenia: ")
-        
-        if(len(password)<6):
-            optionsShow("---La contraseña debe tener al menos 7 caracteres", "Volver al Inicio","Ingresar la contraseña nuevamente:" )
+    userName = continueUntilCorrect("Ingrese su nombre completo: ",userNameValidation)
+    if(userName is None): return
 
-            match int(input("Escoja una opcion: ")):
-                case 1: return
-                case 2: continue
-        
-        optionsShow("---Registro satisfactorio!!","Volver")
-        input("Escoja una opcion: ")
+    userCode= continueUntilCorrect("Ingrese el codigo del estudiante: ", userCodeValidation)
+    if(userCode is None): return
 
-        return {
-            "name":userName,
-            "password":password
-        }
+    password = continueUntilCorrect("Ingrese la contraseña: ",passwordValidation)
+    if(password is None): return
+
+    optionsShow("---Registro satisfactorio!!","Volver")
+    input("Escoja una opcion: ")
+
+    #se puede crear una clase estudiante aqui
+    return {
+        "username":userName,
+        "code":userCode,
+        "password":password
+    }
