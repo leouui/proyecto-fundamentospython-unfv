@@ -13,7 +13,9 @@ def RegisterUser():
     password = continueUntilCorrect("Ingrese la contraseña: ",passwordValidation)
     if(password is None): return
 
-    optionsShow("---Registro satisfactorio!!","Volver")
+    optionsShow("---Registro satisfactorio!!",
+                "Volver")
+    
     input("Escoja una opcion: ")
 
     #se puede crear una clase estudiante aqui

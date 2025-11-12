@@ -1,4 +1,4 @@
-from helpers import SearchUserByAtr,optionsShow
+from helpers import SearchUserByAtr
 from database.users import users
 
 def userCodeValidation(userCode):

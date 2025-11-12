@@ -1,11 +1,26 @@
-from helpers import clearConsole
-def App(data):
-    clearConsole()
-    
+from helpers import optionsShow,clearConsole
+def App(data):    
     while True:
-        print(f"Bienvenido a la Aplicacion {data['username'].split()[0]}")
-        print("Menu de cosas")
-        input("Escoja una opcion")
+        optionsShow(f"---------Bienvenido {data['username'].split()[0]} 🖐🖐---------",
+                    "Gestor de Tareas y Recordatorios",
+                    "Control de Gastos Estudiantiles",
+                    "Organizador de Apuntes",
+                    "Calculadora Académica Avanzada",
+                    "Salir")
 
-        return
+        option = input("Escoja una opcion: ")
+        clearConsole()
 
+        match option:
+            case 1:
+                print("Gestor de Tareas y Recordatorios")
+            case 2:
+                print("Control de Gastos Estudiantiles")
+            case 3:
+                print("Organizador de Apuntes")
+            case 4:
+                print("Calculadora Académica Avanzada")
+            case 5:
+                break
+            case __:
+                print("Ingrese una opcion correcta")

@@ -5,7 +5,11 @@ from pages.App import App
 from database.actions import addUser
 
 while True:
-    optionsShow("---------Bienvenido al programa---------", "Iniciar Sesion", "Registrarse","Salir")
+    optionsShow("---------Bienvenido al programa---------", 
+                "Iniciar Sesion",
+                "Registrarse",
+                "Salir")
+    
     option = int(input("Escoja una opcion: "))
     clearConsole()
     
