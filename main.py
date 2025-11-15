@@ -24,3 +24,4 @@ while True:
             break
         case __:
             print("Ingrese una opcion correcta")
+            print("majo me está llegando...")
