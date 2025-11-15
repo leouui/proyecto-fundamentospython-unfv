@@ -4,6 +4,7 @@ from pages.Register import RegisterUser
 from pages.App import App
 from database.actions import addUser
 
+
 while True:
     optionsShow("---------Bienvenido al programa---------", 
                 "Iniciar Sesion",
