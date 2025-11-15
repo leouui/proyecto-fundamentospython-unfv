@@ -12,7 +12,7 @@ while True:
     
     option = int(input("Escoja una opcion: "))
     clearConsole()
-    
+    print("Test")
     match option:
         case 1:
             user = Login()
