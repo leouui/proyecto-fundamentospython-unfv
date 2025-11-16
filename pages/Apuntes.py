@@ -4,9 +4,9 @@ def CrearApunte(user):
     clearConsole()
     title = input("Título del apunte: ")
     content = input("Contenido: ")
-
     apuntes.append({"user": user, "title": title, "content": content})
     print("Apunte guardado.")
+
 def MostrarApuntes(user):
     apuntes_user=[n for n in apuntes if n["user"]==user]
     if not apuntes_user:
@@ -104,5 +104,3 @@ def MenuApuntes(user):
                 print("Ingrese una opcion valida")
                 input("Continuar[ENTER]")
 
-if __name__=="__main__":
-    MenuApuntes(user="anto")
