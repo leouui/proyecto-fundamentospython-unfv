@@ -2,7 +2,7 @@ from helpers import SearchUserByAtr
 from database.users import users
 
 def userCodeValidation(userCode):
-    (find,user) = SearchUserByAtr("code",userCode,users)
+    (find,user,index) = SearchUserByAtr("usercode",userCode,users)
 
     if(not(find)): return (False, "No se encontro el estudiante")
 

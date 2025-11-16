@@ -1,5 +1,6 @@
 from helpers import optionsShow, continueUntilCorrect
 from pages.validations.Register import userCodeValidation,userNameValidation,passwordValidation
+from database.users import users
 
 def RegisterUser():
     print("---------Registro---------")
@@ -21,6 +22,7 @@ def RegisterUser():
     #se puede crear una clase estudiante aqui
     return {
         "username":userName,
-        "code":userCode,
-        "password":password
+        "usercode":userCode,
+        "password":password,
+        "notes":[]
     }

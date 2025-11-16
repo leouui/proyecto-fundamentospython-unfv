@@ -1,5 +1,7 @@
 from helpers import optionsShow,clearConsole
-from Apuntes import MenuApuntes
+from .Apuntes import MenuApuntes
+from .CalcAcademica import MenuCalculadora
+
 def App(data):    
     while True:
         optionsShow(f"---------Bienvenido {data['username'].split()[0]} 🖐🖐---------",
@@ -20,7 +22,7 @@ def App(data):
             case 3:
                 MenuApuntes(data)
             case 4:
-                print("Calculadora Académica Avanzada")
+                MenuCalculadora(data)
             case 5:
                 break
             case __:

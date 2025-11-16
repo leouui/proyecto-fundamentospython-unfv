@@ -9,7 +9,7 @@ def userNameValidation(userName):
 def userCodeValidation(code):
     if(len(code)!=10): return (False, "El codigo debe tener 10 digitos")
     
-    if(SearchUserByAtr("code",code,users)[0]): return (False,"El codigo de estudiante ya existe")
+    if(SearchUserByAtr("usercode",code,users)[0]): return (False,"El codigo de estudiante ya existe")
 
     return (True,code)
 

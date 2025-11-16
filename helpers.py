@@ -2,11 +2,10 @@ import os
 import platform
 
 def SearchUserByAtr(atr,search,users):
-    for user in users:
+    for (index,user) in enumerate(users):
         if(user[atr] == search):
-            return (True, user)
+            return (True, user,index)
     return (False,None)
-
 
 def clearConsole():
     if platform.system() == "Windows":
@@ -18,7 +17,7 @@ def optionsShow(init,*options):
     clearConsole()
     print(init)
     for (index,msg) in enumerate(options):
-        print(f"{msg} [{index + 1}]")
+        print(f"-> {msg} [{index + 1}]")
 
 #El formato del las funciones "validations" deben ser de la siguiente manera: Si dentro de esta funcion existe algo que no se cumple entonces debe retornar (False, El mensaje de error)
 # En caso todo se cumpla debe retornar (True,El valor del argumento)
