@@ -1,5 +1,9 @@
 from helpers import clearConsole,optionsShow
 Notas={}
+# el codigo falla cuando se intenta con varios usuarios, la idea de definir un objeto global no funciona, para eso puedes guiarte de lo que hice en apuntes, y en lugar de ser {"username":...,"usercode":..., "password":...,"notes":[],"Materias":{...}}
+# debe ser {"username":...,"usercode":..., "password":...,"notes":[],"courses":{...}} pq debe ser uniformemente en ingles 
+# basate en el codigo que te corregi de apuntes para implementar tu solucion, y utiliza la funcion continueUntilIsCorrect que esta en helpers, las validaciones tienes que crearlas especificamente en la capreta validations(Hay ejemplos de que formato deben tener)
+# igual puedes preguntarme
 
 def AgregarMateria(user):
     if user not in Notas:
@@ -118,6 +122,7 @@ def CalcPromedio(user):
 
 def MenuCalculadora(user):
     user=user['username']
+    
     while True:
         optionsShow(f"{user} Bienvenid@ a la calculadora de notas ",
                     "Agregar una materia",
@@ -125,6 +130,7 @@ def MenuCalculadora(user):
                     "Ver materias",
                     "Calcular promedio",
                     "Salir")
+        print(Notas)
         op=input("Ingrese una opcion: ")
         clearConsole()
         match op:
