@@ -5,7 +5,7 @@ def SearchUserByAtr(atr,search,users):
     for (index,user) in enumerate(users):
         if(user[atr] == search):
             return (True, user,index)
-    return (False,None)
+    return (False,None,-1)
 
 def clearConsole():
     if platform.system() == "Windows":

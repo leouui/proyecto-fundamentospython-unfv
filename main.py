@@ -10,9 +10,13 @@ while True:
                 "Iniciar Sesion",
                 "Registrarse",
                 "Salir")
+    try:
+        option = int(input("Escoja una opcion: "))
+        clearConsole()
+    except ValueError:
+        option=0
+        clearConsole()
     
-    option = int(input("Escoja una opcion: "))
-    clearConsole()
     print("Test")
     match option:
         case 1:
@@ -23,6 +27,11 @@ while True:
             if(not(user is None)): addUser(user)
         case 3:
             break
-        case __:
+        case 0:
+            print("ERROR: Ingrese un número válido (1, 2, o 3).")
+            input("Presione ENTER para continuar.")
+        case _:
             print("Ingrese una opcion correcta")
-            print("jose")
+
+
+
