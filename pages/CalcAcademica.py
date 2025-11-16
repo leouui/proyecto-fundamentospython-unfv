@@ -90,7 +90,7 @@ def VerMaterias(materias,user):
         if notas_user:
             print("    Notas Registradas:")
             for i,n in enumerate(notas_user,1):
-                print(f"    {i}. Nota: {n["nota"]} Peso: {n["peso"]}%")
+                print(f"    {i}. Nota: {n['nota']} Peso: {n['peso']}%")
     print("-------------------------")
     print("Opciones\nAgregar una materia [1]\nEliminar materia [2]\nAgregar nota [3]\nRegresar [4]")
     op = input("Ingrese una opcion: ")
@@ -125,7 +125,7 @@ def CalcPromedio(materias,user):
     peso_total=0
     #print(notas_user)
     for n in notas_user:
-        print(f"Nota: {n["nota"]} Peso: {n["peso"]}%")
+        print(f"Nota: {n['nota']} Peso: {n['peso']}%")
         suma+=n["nota"]*(n["peso"]/100)
         peso_total+=n["peso"]
     if peso_total!=100:
@@ -193,5 +193,5 @@ def MenuCalculadora(user):
             case "6":
                 return
             case _:
-                print("Opcion no valida")
-                input("Reintentar[ENTER]")
+                print("-->Ingrese una opcion valida")
+                input("Continuar[ENTER]")

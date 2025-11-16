@@ -13,19 +13,20 @@ def App(data):
                     "Calculadora Académica Avanzada",
                     "Salir")
 
-        option = int(input("Escoja una opcion: "))
+        option = input("Ingrese una opcion: ")
         clearConsole()
         
         match option:
-            case 1:
+            case "1":
                 MenuTareas(data)
-            case 2:
+            case "2":
                 MenuGastos(data)
-            case 3:
+            case "3":
                 MenuApuntes(data)
-            case 4:
+            case "4":
                 MenuCalculadora(data)
-            case 5:
+            case "5":
                 break
-            case __:
-                print("Ingrese una opcion correcta")
+            case _:
+                print("-->Ingrese una opcion correcta")
+                print("Continuar[ENTER]")

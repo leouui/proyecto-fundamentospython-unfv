@@ -174,29 +174,3 @@ def MenuTareas(user):
             case _:
                 clearConsole()
                 input("Opción no válida. Presione ENTER para reintentar.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    

@@ -59,7 +59,7 @@ def MenuApuntes(user):
         
         op = input("Ingrese una opcion: ")
         clearConsole()
-
+        
         apuntes = SearchUserByAtr("usercode",user["usercode"],users)[1]["notes"]
         
         match op :
@@ -68,5 +68,5 @@ def MenuApuntes(user):
             case "3": EliminarApunte(user,apuntes)
             case "4": break
             case _:
-                print("Ingrese una opcion valida")
+                print("-->Ingrese una opcion valida")
                 input("Continuar[ENTER]")
