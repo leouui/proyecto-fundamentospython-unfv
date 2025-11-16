@@ -1,6 +1,8 @@
 from helpers import optionsShow,clearConsole
 from .Apuntes import MenuApuntes
 from .CalcAcademica import MenuCalculadora
+from .Tareas import MenuTareas
+
 
 def App(data):    
     while True:
@@ -16,7 +18,7 @@ def App(data):
         
         match option:
             case 1:
-                print("Gestor de Tareas y Recordatorios")
+                MenuTareas(data)
             case 2:
                 print("Control de Gastos Estudiantiles")
             case 3:
