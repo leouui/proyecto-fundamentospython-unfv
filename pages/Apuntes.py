@@ -87,8 +87,9 @@ def EliminarApunte(user):
             return
 
 def MenuApuntes(user):
+    user=user['username']
     while True:
-        optionsShow(f"Bienvenido a tus apuntes {user['username']}","Crear un Apunte","Mostrar sus apuntes","Eliminar un apunte","Salir")
+        optionsShow(f"Bienvenido a tus apuntes {user}","Crear un Apunte","Mostrar sus apuntes","Eliminar un apunte","Salir")
         op=(input("ingrese una opcion: "))
         clearConsole()
         match op :

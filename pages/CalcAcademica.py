@@ -116,7 +116,8 @@ def CalcPromedio(user):
     print("El promedio ponderado es ",suma)
     input("Regresar[ENTER]")
 
-def CalcAcademica(user):
+def MenuCalculadora(user):
+    user=user['username']
     while True:
         optionsShow(f"{user} Bienvenid@ a la calculadora de notas ",
                     "Agregar una materia",
@@ -140,6 +141,3 @@ def CalcAcademica(user):
             case _:
                 print("Opcion no valida")
                 input("Rintentar[ENTER]")
-
-if __name__=="__main__":
-    CalcAcademica(user="Anto")
