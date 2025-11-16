@@ -3,7 +3,7 @@ import datetime #libreria para manejar fechas y horas
 
 tareas = []
 
-def CrearTarea(usarname):
+def CrearTarea(username): 
     """Crear una nueva tarea para el usuario"""
     clearConsole()
     print("--- Nueva Tarea ---")
@@ -18,14 +18,14 @@ def CrearTarea(usarname):
     while fecha_valida is None:
         fecha_str = input("Fecha de vencimiento (formato AAAA-MM-DD) : ")
         try:
-            fecha_valida = datetime.datetime.strftime(fecha_str, '%Y-%m-%d').date()
+            fecha_valida = datetime.datetime.strptime(fecha_str, '%Y-%m-%d').date()
             if fecha_valida < datetime.date.today():
                 print(f"Advertencia: La fecha '{fecha_str}' ya pasó.")
         except ValueError:
             print("Formato de fecha incorrecta. debe de ser AAAA-MM-DD.")
 
     nueva_tarea = {
-        "user": usarname,
+        "user": username,
         "titulo": titulo,
         "fecha_venc": fecha_valida,
         "completada": False
@@ -61,11 +61,11 @@ def _mostrar_y_obtener_lista(username, filtro='pendientes'):
         print("\nNo tienes tareas en esta vista.")
         return None
     
-    print(f"\n{'N':<3} | {'Fecha Venc.':<12} | {'Estado':<10} | {'Titulo':<25} ")
+    print(f"\n{'N°':<3} | {'Fecha Venc.':<12} | {'Estado':<10} | {'Titulo':<25} ")
     print("-" * 63)
 
     for i, tarea in enumerate(lista_ordenada):
-        estado = "Completada" if tarea['Completada'] else "Pendiente"
+        estado = "Completada" if tarea['completada'] else "Pendiente"
         fecha_str = tarea['fecha_venc'].strftime('%Y-%m-%d')
         print(f"{i+1:<3} | {fecha_str:<12} | {estado:<10} | {tarea['titulo']:<25}")
 
@@ -102,7 +102,7 @@ def MarcarCompletado(username):
                     print("Opción no valida")
 
     tarea_a_marcar = lista_pendientes[num-1]
-    tarea_a_marcar['completada'] = True
+    tarea_a_marcar['completada'] = True 
 
     optionsShow("¡Tarea marcada como completada!", "Volver")
     input("Escoja una opción: ")
