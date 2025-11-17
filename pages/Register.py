@@ -25,5 +25,5 @@ def RegisterUser():
         "usercode":userCode,
         "password":password,
         "notes":[],
-        "courses":[]
+        "courses":{}
     }

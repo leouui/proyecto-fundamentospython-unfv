@@ -140,16 +140,3 @@ def MenuGastos(user):
                 break
             case _:
                 input("Opción no válida. Presione ENTER para reintentar.")
-
-
-
-
-
-
-
-
-
-
-
-
-
