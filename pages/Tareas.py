@@ -1,14 +1,14 @@
-from helpers import clearConsole, optionsShow
+from helpers import clearConsole, optionsShow, SearchUserByAtr
 import datetime #libreria para manejar fechas y horas
+from database.users import users
+from database.actions import modifyDataUser
 
-tareas = []
-
-def CrearTarea(username): 
+def CrearTarea(user, tareas_usuario): 
     """Crear una nueva tarea para el usuario"""
     clearConsole()
     print("--- Nueva Tarea ---")
 
-    titulo = ""
+    titulo = "" 
     while not titulo :
         titulo = input("Escriba el tItulo de la tarea a agregar: ")
         if not titulo:
@@ -25,21 +25,22 @@ def CrearTarea(username):
             print("Formato de fecha incorrecta. debe de ser AAAA-MM-DD.")
 
     nueva_tarea = {
-        "user": username,
+
         "titulo": titulo,
         "fecha_venc": fecha_valida,
         "completada": False
     }
-    tareas.append(nueva_tarea)
+    tareas_usuario.append(nueva_tarea)
+
+    modifyDataUser(user["usercode"], {**user, "tasks": tareas_usuario})
 
     optionsShow("¡Tarea creada con éxito!", "volver")
     input("escoja una opción: ")
 
-def _mostrar_y_obtener_lista(username, filtro='pendientes'):
+def _mostrar_y_obtener_lista(tareas_usuario, filtro='pendientes'):
 
     clearConsole()
 
-    tareas_usuario = [t for t in tareas if t['user'] == username]
     lista_filtrada = []
     titulo_vista = ""
 
@@ -72,8 +73,8 @@ def _mostrar_y_obtener_lista(username, filtro='pendientes'):
     print("-" * 63)
     return lista_ordenada
 
-def MarcarCompletado(username):
-    lista_pendientes =_mostrar_y_obtener_lista(username, filtro='pendientes')
+def MarcarCompletado(user, tareas_usuario):
+    lista_pendientes =_mostrar_y_obtener_lista(tareas_usuario, filtro='pendientes')
 
     if lista_pendientes is None:
         input ("\nNo hay tareas pendientes. Presione ENTER para volver...")
@@ -94,7 +95,7 @@ def MarcarCompletado(username):
             clearConsole()
             match op:
                 case "1":
-                    MarcarCompletado(username)
+                    MarcarCompletado(user, tareas_usuario)
                     return
                 case "2":
                     return
@@ -104,11 +105,13 @@ def MarcarCompletado(username):
     tarea_a_marcar = lista_pendientes[num-1]
     tarea_a_marcar['completada'] = True 
 
+    modifyDataUser(user["usercode"], {**user, "tasks": tareas_usuario})
+
     optionsShow("¡Tarea marcada como completada!", "Volver")
     input("Escoja una opción: ")
 
-def EliminarTarea(username):
-        lista_todas = _mostrar_y_obtener_lista(username, filtro='todas')
+def EliminarTarea(user, tareas_usuario):
+        lista_todas = _mostrar_y_obtener_lista(tareas_usuario, filtro='todas')
         
         if lista_todas is None:
             input("\nNo hay tareas para eliminar. Presione ENTER para volver...")
@@ -130,21 +133,20 @@ def EliminarTarea(username):
                 clearConsole()
                 match op:
                     case "1":
-                        EliminarTarea(username) 
+                        EliminarTarea(user, tareas_usuario) 
                         return
                     case "2":
                         return
                     case _:
                         print("Opcion no valida")
         tarea_a_eliminar = lista_todas[num-1]
-        tareas.remove(tarea_a_eliminar)
+        tareas_usuario.remove(tarea_a_eliminar)
         
         optionsShow("¡Tarea eliminada permanentemente!", "Volver")
         input("Escoja una opcion: ")
 
 def MenuTareas(user):
-    username = user['username'] 
-    
+
     while True:
         optionsShow(f"--- Gestor de Tareas de {user['username'].split()[0]} ---",
                     "Crear Tarea",
@@ -156,19 +158,21 @@ def MenuTareas(user):
         
         opcion = input("Escoja una opcion: ")
         
+        tareas_usuario_actual = SearchUserByAtr("usercode", user["usercode"], users)[1]["tasks"]
+
         match opcion:
             case "1":
-                CrearTarea(username)
+                CrearTarea(user, tareas_usuario_actual)
             case "2":
-                _mostrar_y_obtener_lista(username, filtro='pendientes')
+                _mostrar_y_obtener_lista(tareas_usuario_actual, filtro='pendientes')
                 input("\nPresione ENTER para volver...")
             case "3":
-                MarcarCompletado(username)
+                MarcarCompletado(user, tareas_usuario_actual)
             case "4":
-                _mostrar_y_obtener_lista(username, filtro='completadas')
+                _mostrar_y_obtener_lista(tareas_usuario_actual, filtro='completadas')
                 input("\nPresione ENTER para volver...")
             case "5":
-                EliminarTarea(username)
+                EliminarTarea(user, tareas_usuario_actual)
             case "6":
                 break 
             case _:
