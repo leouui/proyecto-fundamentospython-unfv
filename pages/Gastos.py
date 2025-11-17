@@ -1,26 +1,17 @@
-from helpers import clearConsole, optionsShow
+from helpers import clearConsole, optionsShow, SearchUserByAtr
 import datetime 
+from database.users import users
+from database.actions import modifyDataUser
 
-gastos_db = {}
-
-def _get_gastos_usuario(username):
-    """Obtiene la lista de gastos del usuario actual. La crea si no existe."""
-    if username not in gastos_db:
-        gastos_db[username] = [] 
-    return gastos_db[username]
-
-def _mostrar_gastos(username, filtro_categoria=None):
-
+def _mostrar_gastos(lista_gastos, filtro_categoria=None):
     clearConsole()
-    lista_gastos = _get_gastos_usuario(username)
     total = 0.0
     
     if filtro_categoria:
         print(f"--- Gastos de '{filtro_categoria}' ---")
-
         gastos_filtrados = [g for g in lista_gastos if g['categoria'].lower() == filtro_categoria.lower()]
     else:
-        print(f"--- Todos los Gastos de {username.split()[0]} ---")
+        print(f"--- Todos los Gastos ---")
         gastos_filtrados = lista_gastos
 
     if not gastos_filtrados:
@@ -41,7 +32,7 @@ def _mostrar_gastos(username, filtro_categoria=None):
     input("\nPresione ENTER para volver...")
 
 
-def RegistrarGasto(username):
+def RegistrarGasto(user, lista_gastos):
     """Registra un nuevo gasto, con validación de monto."""
     monto = 0.0
 
@@ -61,35 +52,38 @@ def RegistrarGasto(username):
     descripcion = input("Descripción (ej. 'Almuerzo'): ")
     categoria = input("Categoría (ej. 'Comida', 'Transporte'): ").capitalize()
     
-    lista_gastos = _get_gastos_usuario(username)
-    
     nuevo_gasto = {
         "monto": monto,
         "descripcion": descripcion,
         "categoria": categoria,
         "fecha": datetime.date.today() 
     }
+    
+    # 1. Añadir a la lista local
     lista_gastos.append(nuevo_gasto)
+
+    # 2. Guardar en la base de datos global
+    modifyDataUser(user["usercode"], {**user, "expenses": lista_gastos})
 
     optionsShow("¡Gasto registrado con éxito!", "Agregar otro gasto", "Volver al Menú")
     op = input("Escoja una opcion: ")
     match op:
         case "1":
-            RegistrarGasto(username)
+            RegistrarGasto(user, lista_gastos) 
         case "2":
             return
         case _:
             return
 
-def VerGastosPorCategoria(username):
+def VerGastosPorCategoria(lista_gastos):
     """Permite al usuario elegir una categoría y filtra los gastos."""
     clearConsole()
-    lista_gastos = _get_gastos_usuario(username)
     
     if not lista_gastos:
         input("No tienes gastos para filtrar.\nRegresar[ENTER]")
         return
 
+    # Obtenemos las categorías únicas de la lista real
     categorias = sorted(list(set(g['categoria'] for g in lista_gastos)))
     
     print("Filtrar Gastos por Categoría - Elige una:")
@@ -109,7 +103,7 @@ def VerGastosPorCategoria(username):
             clearConsole()
             match op:
                 case "1":
-                    VerGastosPorCategoria(username) 
+                    VerGastosPorCategoria(lista_gastos) 
                     return
                 case "2":
                     return 
@@ -117,12 +111,11 @@ def VerGastosPorCategoria(username):
                     print("Opcion no valida")
     
     categoria_seleccionada = categorias[num-1]
-    _mostrar_gastos(username, filtro_categoria=categoria_seleccionada)
+    _mostrar_gastos(lista_gastos, filtro_categoria=categoria_seleccionada)
 
 # --- Menú Principal del Módulo ---
 
 def MenuGastos(user):
-    username = user['username']
     
     while True:
         optionsShow(f"--- Control de Gastos de {user['username'].split()[0]} ---",
@@ -133,14 +126,16 @@ def MenuGastos(user):
         
         opcion = input("Escoja una opcion: ")
         clearConsole()
+
+        gastos_actuales = SearchUserByAtr("usercode", user["usercode"], users)[1]["expenses"]
         
         match opcion:
             case "1":
-                RegistrarGasto(username)
+                RegistrarGasto(user, gastos_actuales)
             case "2":
-                _mostrar_gastos(username)
+                _mostrar_gastos(gastos_actuales)
             case "3":
-                VerGastosPorCategoria(username)
+                VerGastosPorCategoria(gastos_actuales)
             case "4":
                 break
             case _:
