@@ -20,8 +20,8 @@ def CrearApunte(user,apuntes):
     apuntes.append({"id": random.randint(100000000,9999999999), "title": title, "content": content})
 
     modifyDataUser(user["usercode"],{**user,"notes":apuntes})
-
-    print("Apunte guardado.")
+    print("--> Apunte guardado")
+    input("Regresar[Enter] ")
 
 def MostrarApuntes(apuntes):
     if not apuntes:
@@ -59,7 +59,7 @@ def MenuApuntes(user):
         
         op = input("Ingrese una opcion: ")
         clearConsole()
-
+        
         apuntes = SearchUserByAtr("usercode",user["usercode"],users)[1]["notes"]
         
         match op :
@@ -68,5 +68,5 @@ def MenuApuntes(user):
             case "3": EliminarApunte(user,apuntes)
             case "4": break
             case _:
-                print("Ingrese una opcion valida")
+                print("-->Ingrese una opcion valida")
                 input("Continuar[ENTER]")

@@ -17,7 +17,7 @@ def RegisterUser():
     optionsShow("---Registro satisfactorio!!",
                 "Volver")
     
-    input("Escoja una opcion: ")
+    input("Ingrese una opcion: ")
 
     #se puede crear una clase estudiante aqui
     return {
