@@ -34,7 +34,7 @@ def continueUntilCorrect(textInput,validations=lambda a:(True,None),*args):
             break
 
         optionsShow(f"---{msg}",
-                    "Volver al Inicio",
+                    "Regresar",
                     "Reintentar:")
     
         match input("Ingrese una opcion: "):

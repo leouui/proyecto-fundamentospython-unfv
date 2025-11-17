@@ -20,8 +20,8 @@ def CrearApunte(user,apuntes):
     apuntes.append({"id": random.randint(100000000,9999999999), "title": title, "content": content})
 
     modifyDataUser(user["usercode"],{**user,"notes":apuntes})
-
-    print("Apunte guardado.")
+    print("--> Apunte guardado")
+    input("Regresar[Enter] ")
 
 def MostrarApuntes(apuntes):
     if not apuntes:
