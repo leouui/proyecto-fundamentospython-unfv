@@ -25,7 +25,7 @@ def selectMat(materias):
 
 def AgregarMateria(materias,user):
     optionsShow("----Agregar Materia----")
-
+    print(materias)
     mat=continueUntilCorrect("Ingrese el nombre de la materia: ",courseTitlevalidation).upper()
 
     if mat in materias:
