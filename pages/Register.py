@@ -1,29 +1,24 @@
-from helpers import optionsShow, continueUntilCorrect
+from helpers import optionsShow, continueUntilCorrect,dynamicInputs
 from pages.validations.Register import userCodeValidation,userNameValidation,passwordValidation
-from database.users import users
 
 def RegisterUser():
-    print("---------Registro---------")
-    
-    userName = continueUntilCorrect("Ingrese su nombre completo: ",userNameValidation)
-    if(userName is None): return
+    results = dynamicInputs("---------Registro---------",
+        ["Ingrese su nombre completo: ",userNameValidation], #results[0]
+        ["Ingrese el codigo del estudiante: ",userCodeValidation], #results[1]
+        ["Ingrese la contraseña: ",passwordValidation], #results[2]
+    )
 
-    userCode= continueUntilCorrect("Ingrese el codigo del estudiante: ", userCodeValidation)
-    if(userCode is None): return
-
-    password = continueUntilCorrect("Ingrese la contraseña: ",passwordValidation)
-    if(password is None): return
+    if results is None: return
 
     optionsShow("---Registro satisfactorio!!",
                 "Volver")
     
     input("Ingrese una opcion: ")
 
-    #se puede crear una clase estudiante aqui
     return {
-        "username":userName,
-        "usercode":userCode,
-        "password":password,
+        "username":results[0],
+        "usercode":results[1],
+        "password":results[2],
         "notes":[],
         "courses":{},
         "tasks": [],

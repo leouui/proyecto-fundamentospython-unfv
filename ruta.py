@@ -1,0 +1,1 @@
+ruta ="D:\Archivos Leo\proyecto-fundamentospython-unfv\database\database.txt"

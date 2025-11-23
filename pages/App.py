@@ -28,5 +28,4 @@ def App(data):
             case "5":
                 break
             case _:
-                print("-->Ingrese una opcion correcta")
-                print("Continuar[ENTER]")
+                input("-->Ingrese una opcion correcta\nRegresar[ENTER]")

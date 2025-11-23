@@ -1,53 +1,47 @@
-import random
-from helpers import clearConsole,optionsShow,continueUntilCorrect,SearchUserByAtr
+from helpers import clearConsole,optionsShow,dynamicInputs,SearchUserByAtr
 from .validations.Apuntes import noteTitlevalidation,numNotesvalidation
-from database.users import users
 from database.actions import modifyDataUser
+from database.users import users
 
 def listarApuntes(apuntes):
-    print("Tus apuntes: ")
-
+    l ="------Tus apuntes------\n"
     for (i,note) in enumerate(apuntes):
-        print(f"{i+1}) {note['title']}")
-        print(f"--> {note['content']}")
-    print("------------------------")
-    
+        l+= f"{i+1}) {note['title']}\n"
+        l+= f"--> {note['content']}\n"
+    l +="------------------------"
+    return l
+
 def CrearApunte(user,apuntes):
-    optionsShow("----Crea tu apunte----")
-    title = continueUntilCorrect("Título del apunte: ",noteTitlevalidation)
-    content = continueUntilCorrect("Contenido del apunte: ",noteTitlevalidation)
+    results = dynamicInputs("----Crea tu apunte----",
+        ["Titulo del apunte: ",noteTitlevalidation], # results[0]
+        ["Contenido del apunte: ",noteTitlevalidation] # results[1]
+    )
+    if(results is None): return
 
-    apuntes.append({"id": random.randint(100000000,9999999999), "title": title, "content": content})
-
+    apuntes.append({"title": results[0], "content": results[1]})
     modifyDataUser(user["usercode"],{**user,"notes":apuntes})
-    print("--> Apunte guardado")
-    input("Regresar[Enter] ")
+
+    input("--> Apunte guardado\nRegresar[Enter] ")
 
 def MostrarApuntes(apuntes):
     if not apuntes:
-        optionsShow("No tienes apuntes aún", "Regresar")
-        return input("Ingrese una opción: ")
+        return input("--> No hay apuntes aqui\nRegresar[ENTER] " )
     
-    listarApuntes(apuntes)
-
-    print("Regresar[1]")
-    input("Ingrese una opción: ")
+    print(listarApuntes(apuntes))
+    input("Regresar [Enter] ")
 
 def EliminarApunte(user,apuntes):
-
     if not apuntes:
-        print("No tienes apuntes que eliminar")
-        return input("Regresar[ENTER]")
-    
-    listarApuntes(apuntes)
+        return input("--> No hay apuntes aqui\nRegresar[ENTER] " )
 
-    num=continueUntilCorrect("Ingrese el numero de apunte que desea eliminar: ",numNotesvalidation,apuntes)
-    apuntes.pop(num-1)
-    
+    results = dynamicInputs(listarApuntes(apuntes),
+        ["Ingrese el numero de apunte que desea eliminar: ",numNotesvalidation,apuntes] # results[0]
+    )
+
+    apuntes.pop(results[0]-1)
     modifyDataUser(user["usercode"],{**user,"notes":apuntes})
 
-    print("Apunte eliminado")
-    return input("Regresar [ENTER]")
+    input("--> Apunte eliminado\nRegresar [ENTER] ")
     
 def MenuApuntes(user):
     while True:
@@ -67,6 +61,4 @@ def MenuApuntes(user):
             case "2": MostrarApuntes(apuntes)
             case "3": EliminarApunte(user,apuntes)
             case "4": break
-            case _:
-                print("-->Ingrese una opcion valida")
-                input("Continuar[ENTER]")
+            case _: input("--> Ingrese una opcion valida\nContinuar[ENTER] ")

@@ -22,7 +22,7 @@ def optionsShow(init,*options):
 #El formato del las funciones "validations" deben ser de la siguiente manera: Si dentro de esta funcion existe algo que no se cumple entonces debe retornar (False, El mensaje de error)
 # En caso todo se cumpla debe retornar (True,El valor del argumento)
 
-def continueUntilCorrect(textInput,validations=lambda a:(True,None),*args):
+def continueUntilCorrect(textInput,validations=lambda a:(True,None),*args,shm = False):
     inp = ""
 
     while True:
@@ -39,7 +39,31 @@ def continueUntilCorrect(textInput,validations=lambda a:(True,None),*args):
     
         match input("Ingrese una opcion: "):
             case "1": return None
-            case "2": continue
-            case _: continue
+            case _: 
+                if(not(shm)): continue
+                return True
 
     return inp
+
+def dynamicInputs(header,*inputs):
+    responsesCache = []
+    
+    while True:
+        clearConsole()
+        print(header)
+
+        for index, inputArgs in enumerate(inputs):
+            try:
+                if(responsesCache[index]): print(inputArgs[0], responsesCache[index])
+                continue
+            except:
+                pass
+            
+            input = continueUntilCorrect(*inputArgs,shm=True)
+            if(input is None): return None
+            
+
+            if(input is True): break
+            responsesCache.append(input)
+        
+        if(len(inputs) == len(responsesCache)): return responsesCache
